@@ -10,7 +10,7 @@ use solana_program::{
 
 pub mod instruction;
 use crate::instruction::HelloInstruction;
-
+//use instruction::HelloInstruction;
 /// Define the type of state stored in accounts
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct GreetingAccount {

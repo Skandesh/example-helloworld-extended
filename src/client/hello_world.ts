@@ -197,21 +197,31 @@ export async function checkProgram(): Promise<void> {
   }
 }
 function createIncrementInstruction(): Buffer {
-  const layout = BufferLayout.struct([BufferLayout.u8('instruction')]);
+  const layout = BufferLayout.struct<Settings>([BufferLayout.u8('instruction')]);
   const data = Buffer.alloc(layout.span);
   layout.encode({instruction: 0}, data);
   return data
 }
 
+interface Settings {
+  instruction:number,
+  
+}
+interface Settings2 {
+  instruction:number
+  value:number,
+  
+}
+
 function createDecrementInstruction(): Buffer {
-  const layout = BufferLayout.struct([BufferLayout.u8('instruction')]);
+  const layout = BufferLayout.struct<Settings>([BufferLayout.u8('instruction')]);
   const data = Buffer.alloc(layout.span);
   layout.encode({instruction: 1}, data);
   return data
 }
 
 function createSetInstruction(): Buffer {
-  const layout = BufferLayout.struct([
+  const layout = BufferLayout.struct<Settings2>([
     BufferLayout.u8('instruction'), 
     BufferLayout.u32('value')]);
   const data = Buffer.alloc(layout.span);
@@ -227,7 +237,7 @@ export async function sayHello(): Promise<void> {
   const instruction = new TransactionInstruction({
     keys: [{pubkey: greetedPubkey, isSigner: false, isWritable: true}],
     programId,
-    data: createDecrementInstruction(), // All instructions are hellos
+    data: createSetInstruction(), // All instructions are hellos
   });
   await sendAndConfirmTransaction(
     connection,
