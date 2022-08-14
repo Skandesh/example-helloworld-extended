@@ -226,7 +226,7 @@ function createSetInstruction(): Buffer {
     BufferLayout.u32('value')]);
   const data = Buffer.alloc(layout.span);
   layout.encode({instruction: 2, value:7}, data);
-  return data=
+  return data
 }
 
 /**
